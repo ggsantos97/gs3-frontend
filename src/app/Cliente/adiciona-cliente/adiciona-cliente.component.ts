@@ -60,4 +60,12 @@ formClienteAdd: FormGroup;
     return this.formClienteAdd.get('telefones') as FormArray;
   }
 
+  get emailsFormArray(): FormArray {
+    return this.formClienteAdd.get('emails') as FormArray;
+  }
+
+  close(){
+    this.dialogRef.close();
+  }
+
 }

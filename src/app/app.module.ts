@@ -12,7 +12,7 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCardModule} from '@angular/material/card'
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -57,7 +57,8 @@ import { DetalheClienteComponent } from './Cliente/detalhe-cliente/detalhe-clien
     
   ],
   providers: [ AuthService, AuthGuardService,
-      {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi:true}
+      {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi:true},
+      { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ],
   bootstrap: [AppComponent]
 })

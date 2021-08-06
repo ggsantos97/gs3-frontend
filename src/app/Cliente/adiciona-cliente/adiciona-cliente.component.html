@@ -8,50 +8,50 @@
 <div mat-dialog-content>
 
     <form [formGroup]=formClienteAdd>
-        <div >
+        <div class="row">
             <mat-form-field class="col-6">
                 <mat-label>Nome:</mat-label>
                 <input matInput type=text formControlName="nome">
             </mat-form-field>
 
             <mat-form-field class="col-6">
-                <mat-label>Nome:</mat-label>
-                <input matInput type=text formControlName="cpf">
+                <mat-label>Cpf:</mat-label>
+                <input matInput type=text  mask ="000.000.000-00" formControlName="cpf">
             </mat-form-field>
         </div>
     
          <div formGroupName="endereco">
-            <div >
+            <div class="row">
                 <mat-form-field class="col-4">
-                    <mat-label>Nome:</mat-label>
-                    <input matInput type=text formControlName="cep">
+                    <mat-label>Cep:</mat-label>
+                    <input matInput  mask="00.000-000" formControlName="cep">
                 </mat-form-field>
     
                 <mat-form-field class="col-4">
-                    <mat-label>Nome:</mat-label>
+                    <mat-label>Logradouro:</mat-label>
                     <input matInput type=text formControlName="logradouro">
                 </mat-form-field>
     
                 <mat-form-field class="col-4">
-                    <mat-label>Nome:</mat-label>
+                    <mat-label>Bairro:</mat-label>
                     <input matInput type=text formControlName="bairro">
                 </mat-form-field>
                 
             </div>
 
-            <div >
+            <div class="row">
                 <mat-form-field class="col-4">
-                    <mat-label>Nome:</mat-label>
+                    <mat-label>Cidade:</mat-label>
                     <input matInput type=text formControlName="cidade">
                 </mat-form-field>
     
                 <mat-form-field class="col-4">
-                    <mat-label>Nome:</mat-label>
+                    <mat-label>Uf:</mat-label>
                     <input matInput type=text formControlName="uf">
                 </mat-form-field>
     
                 <mat-form-field class="col-4">
-                    <mat-label>Nome:</mat-label>
+                    <mat-label>Complemento:</mat-label>
                     <input matInput type=text formControlName="complemento">
                 </mat-form-field>
                 
@@ -59,19 +59,32 @@
          </div>
          
          <div>
-            <button id="btn-salvar" type="button" class="mb-2" style="right: -3%;" mat-raised-button color="primary" >Adicionar Acompanhamento</button>
+            <button  type="button" class="mb-2" style="right: -3%;" mat-raised-button color="primary" ><mat-icon>add</mat-icon></button>
             <div formArrayName="telefones">
               <ng-container [formGroupName]="i" *ngFor="let item of telefonesFormArray.controls; let i = index">
                   <div [formGroup]="item">
-                      <mat-form-field class="col-4" >
-                          <mat-label>Dados de Contato</mat-label>
-                          <mat-select formControlName="tipotelefone">
-                             <mat-option value=1>Residencial</mat-option>
-                             <mat-option value=2 >Comercial</mat-option>
-                             <mat-option value=3 >Celular</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-      
+                      
+                        <div class="row">
+                            <mat-form-field class="form-group col-4" >
+                                <mat-label>Tipo Telefone</mat-label>
+                                <mat-select formControlName="tipotelefone">
+                                   <mat-option value=1>Residencial</mat-option>
+                                   <mat-option value=2 >Comercial</mat-option>
+                                   <mat-option value=3 >Celular</mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+                              
+                            <mat-form-field class="col-4">
+                                <mat-label>DDD:</mat-label>
+                                <input matInput type=text formControlName="ddd">
+                            </mat-form-field>
+    
+                            <mat-form-field class="col-4">
+                                <mat-label>Número:</mat-label>
+                                <input matInput type=text formControlName="numerotelefone">
+                            </mat-form-field>
+                        </div>
+                       
                         <!-- <mat-icon class="btn-qtd" (click)="decrementaQuantidade(acompanhamento)">remove</mat-icon> -->
                          <!-- <mat-form-field class="col-2" >
                           <mat-label>Qtd:</mat-label>
@@ -84,5 +97,38 @@
            </div>
           </div>
        
+
+          <div>
+            <button  type="button" class="mb-2" style="right: -3%;" mat-raised-button color="primary" ><mat-icon>add</mat-icon></button>
+            <div formArrayName="emails">
+              <ng-container [formGroupName]="i" *ngFor="let item of emailsFormArray.controls; let i = index">
+                  <div [formGroup]="item">
+                      
+                        <div class="row">                                                                     
+                            <mat-form-field class="col-6">
+                                <mat-label>Email:</mat-label>
+                                <input matInput type=text formControlName="endereco">
+                            </mat-form-field>
+                        </div>
+                       
+                        <!-- <mat-icon class="btn-qtd" (click)="decrementaQuantidade(acompanhamento)">remove</mat-icon> -->
+                         <!-- <mat-form-field class="col-2" >
+                          <mat-label>Qtd:</mat-label>
+                          <input matInput type="text" formControlName="quantidade" readonly>
+                        </mat-form-field>  -->
+                        <!-- <mat-icon class="btn-qtd" (click)="incrementaQuantidade(acompanhamento)">add</mat-icon>
+                        <mat-icon class="btn-qtd" (click)="removeAcompanhamento(i)">delete</mat-icon> -->
+                  </div>
+              </ng-container>      
+           </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 text-right">
+              <button mat-raised-button  status="primary" (click)="close()">Voltar</button>
+              <button mat-raised-button type="submit"  status="primary" 
+                [disabled]="formClienteAdd.invalid">Salvar</button>
+            </div>
+          </div>
     </form>
 </div>
