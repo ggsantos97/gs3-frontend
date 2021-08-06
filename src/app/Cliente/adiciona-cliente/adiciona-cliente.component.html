@@ -1,0 +1,18 @@
+<div>
+    <h1 mat-diaçpg-title> Adicionar Cliente <span style="margin-left: 69%;">
+        <button mat-mini-fab color="warn" mat-dialog-close><mat-icon>clear</mat-icon></button>
+        </span>
+    </h1>
+</div>
+
+<div mat-dialog-content>
+
+    <form [formGroup]=formClienteAdd>
+        <div class="row">
+            <mat-form-field class="col-6">
+                <mat-label>Nome:</mat-label>
+                <input matInput type=text formControlName="nome">
+            </mat-form-field>
+        </div>
+    </form>
+</div>

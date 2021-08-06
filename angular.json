@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/'@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -61,7 +62,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "gs3-frontend:build"
+            "browserTarget": "gs3-frontend:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -87,6 +89,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/'@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -120,5 +123,13 @@
       }
     }
   },
-  "defaultProject": "gs3-frontend"
+  "defaultProject": "gs3-frontend",
+  "cli": {
+    "analytics": "074a33cd-5628-4ac9-b00c-1a701188911b"
+  },
+  "schematics": {
+    "@schematics:component": {
+      "style": "scss"
+    }
+  }
 }

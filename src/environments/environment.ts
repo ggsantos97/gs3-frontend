@@ -3,6 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  API: 'http://localhost:4200/api',
+  API_CEP:'https://viacep.com.br/ws/',
   production: false
 };
 

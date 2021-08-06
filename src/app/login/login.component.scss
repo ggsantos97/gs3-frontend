@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    margin-top: 3%;
+    flex-direction: column;
+    
+    align-items: center;
+    justify-content: center;
+    
+    // form{
+    //     display: flex;
+    //     align-items: center;
+    // }
+    mat-card{
+       width: 100%;
+        align-items: center;
+    }
+    mat-form-field{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    mat-card-title{
+        text-align: center;
+    }
+}
