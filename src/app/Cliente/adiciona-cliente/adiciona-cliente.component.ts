@@ -1,4 +1,4 @@
-import { CATCH_ERROR_VAR } from '@angular/compiler/src/output/output_ast';
+
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, MaxLengthValidator, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -31,7 +31,7 @@ public  customPatterns  =  {  '0' : {  pattern : new  RegExp ( '\ [a-zA-Z \]' ) 
 
   criaForm(){ 
       this.formClienteAdd = this.fb.group({
-        nome:['', Validators.required, Validators.maxLength(100), Validators.minLength(3)],
+        nome:['', Validators.required, [Validators.maxLength(100), Validators.minLength(3)]],
         cpf:['', Validators.required],
         endereco: this.criaFormGroupEndereco(),
         telefones: this.fb.array([this.criaFormGroupTelefone()]),
@@ -119,11 +119,28 @@ public  customPatterns  =  {  '0' : {  pattern : new  RegExp ( '\ [a-zA-Z \]' ) 
   }
 
   salva(){
+    if(this.formClienteAdd.invalid){
+      this.snacBar.open('ERRO', 'Formulário inválido',{
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'top'});
+    }else {
       this.cliente= this.formClienteAdd.value;
       this.service.salva(this.cliente).subscribe( data => {
+        this.snacBar.open('Sucesso', 'Cliente Salvo5100',{
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'});
           this.dialogRef.close(data);
       }, error =>  {
-        this.snacBar.open('ERRO', 'Erro ao tentar salvar Cliente');
-      }) 
+        console.log(error)
+        this.snacBar.open('ERRO', 'Erro ao tentar salvar Cliente',{
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'});
+      }); 
+    }
+ 
+    
   }
 }

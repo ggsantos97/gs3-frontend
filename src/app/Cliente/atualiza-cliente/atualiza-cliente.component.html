@@ -11,7 +11,7 @@
         <div class="row">
             <mat-form-field class="col-6">
                 <mat-label>Nome:</mat-label>
-                <input matInput type=text formControlName="nome" minlength="3" maxlength="100">
+                <input matInput type=text formControlName="nome" minlength="3" maxlength="100" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
             </mat-form-field>
 
             <mat-form-field class="col-6">
@@ -136,7 +136,8 @@
             <div class="botoes">
               <button id="btn-basic" mat-raised-button type="button"  color="basic" (click)="limpaForm()">Limpar</button>
               <button mat-raised-button type="submit"  color="primary" 
-                [disabled]="formClienteUpdate.invalid">Salvar</button>
+                [disabled]="formClienteUpdate.invalid || formClienteUpdate.controls.endereco.invalid || formClienteUpdate.controls.emails.invalid
+                || formClienteUpdate.controls.telefones.invalid">Salvar</button>
             </div>
           </div>
     

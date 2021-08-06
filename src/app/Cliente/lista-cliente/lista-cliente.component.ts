@@ -81,10 +81,16 @@ export class ListaClienteComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.exclui(cliente.id).subscribe(data => {
-          this.snackBar.open('Sucesso', 'Cliente excluído com sucesso!');
+          this.snackBar.open('Sucesso', 'Cliente excluído com sucesso!',{
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'});
           this.listaClientes();
         }, error => {
-          this.snackBar.open('Erro', 'Erro ao tentar excluir Cliente');
+          this.snackBar.open('Erro', 'Erro ao tentar excluir Cliente',{
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'});
         })
       }
     });

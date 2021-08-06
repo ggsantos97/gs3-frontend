@@ -146,11 +146,17 @@ buscaEnderecoPorCep( ) {
 
 atualiza(){
   this.cliente= this.formClienteUpdate.value;
-  debugger
   this.service.atualiza(this.cliente, this.cliente.id).subscribe( data => {
+    this.snacBar.open('Sucesso', 'Cliente Atualizado!!',{
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top'});
       this.dialogRef.close(data);
   }, error =>  {
-    this.snacBar.open('ERRO', 'Erro ao tentar Atualizar Cliente');
+    this.snacBar.open('ERRO', 'Erro ao tentar Atualizar Cliente',{
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top'});
   }); 
 }
 
