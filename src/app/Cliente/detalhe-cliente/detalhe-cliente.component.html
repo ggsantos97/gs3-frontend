@@ -1,1 +1,119 @@
-<p>detalhe-cliente works!</p>
+<div mat-dialog-content>
+
+        <div class="row">
+            <mat-form-field class="col-6">
+                <mat-label>Nome:</mat-label>
+                <input matInput readonly type=text [value]="cliente.nome" >
+            </mat-form-field>
+
+            <mat-form-field class="col-6">
+                <mat-label>Cpf:</mat-label>
+                <input matInput type=text readonly  value="{{cliente.cpf | mask:'000.000.000-00'}}">
+            </mat-form-field>
+        </div>
+    
+         <div >
+            <div class="row">
+                <mat-form-field class="col-4">
+                    <mat-label>Cep:</mat-label>
+                    <input matInput readonly    value="{{cliente.endereco.cep  | mask: '00.000-000'}}">
+                </mat-form-field>
+    
+                <mat-form-field class="col-4">
+                    <mat-label>Logradouro:</mat-label>
+                    <input matInput readonly type=text [value]="cliente.endereco.logradouro">
+                </mat-form-field>
+    
+                <mat-form-field class="col-4">
+                    <mat-label>Bairro:</mat-label>
+                    <input matInput readonly type=text [value]="cliente.endereco.bairro">
+                </mat-form-field>
+                
+            </div>
+
+            <div class="row">
+                <mat-form-field class="col-4">
+                    <mat-label>Cidade:</mat-label>
+                    <input matInput readonly type=text [value]="cliente.endereco.cidade">
+                </mat-form-field>
+    
+                <mat-form-field class="col-4">
+                    <mat-label>Uf:</mat-label>
+                    <input matInput readonly type=text [value]="cliente.endereco.uf">
+                </mat-form-field>
+    
+                <mat-form-field class="col-4">
+                    <mat-label>Complemento:</mat-label>
+                    <input matInput readonly type=text [value]="cliente.endereco.complemento">
+                </mat-form-field>
+                
+            </div>
+         </div>
+         
+         <div>
+            <!-- <button  type="button" class="mb-2" style="right: -3%;" mat-raised-button color="primary" ><mat-icon>add</mat-icon></button> -->
+
+              <ng-container *ngFor="let telefone of cliente.telefones">                   
+                        <div class="row ">
+                            <mat-form-field class="col-4">
+                                <mat-label>Tipo Telefone:</mat-label>
+                                <input matInput readonly type=text [value]="telefone.tipotelefone">
+                            </mat-form-field>
+                              
+                            <mat-form-field class="col-4">
+                                <mat-label>DDD:</mat-label>
+                                
+                                <input matInput readonly type=text value="{{telefone.ddd | mask:'(00)'}}">
+                            </mat-form-field>
+    
+                            <mat-form-field class="col-4">
+                                <mat-label>Número:</mat-label>
+                                <input *ngIf="telefone.numerotelefone.toString().length > 8" matInput readonly type=text value="{{telefone.numerotelefone | mask:'0 0000-0000'}}">
+                                <input *ngIf="telefone.numerotelefone.toString().length <9 " matInput readonly type=text value="{{telefone.numerotelefone | mask:'0000-0000'}}">
+                                <!-- <span *ngIf="item.numero.toString().length>10">  {{item.numero | mask:'0 0000-0000'}}</span>
+                                    <span *ngIf="item.numero.toString().length<11">{{item.numero | mask:'0000-0000'}}</span> -->
+                            </mat-form-field>                           
+                        </div>
+              </ng-container>      
+          
+          </div>
+       
+
+          <div>
+              <ng-container *ngFor="let email of cliente.emails">
+                <div class="row">
+                    <mat-form-field class="col-12">
+                        <mat-label>Email:</mat-label>
+                        <input matInput type=text value="{{email.endereco}}">
+                    </mat-form-field>
+                </div>
+              </ng-container>
+              
+            <!-- <button  type="button" class="mb-2" style="right: -3%;" mat-raised-button color="primary" ><mat-icon>add</mat-icon></button> -->
+            <!-- <div formArrayName="emails">
+              <ng-container [formGroupName]="i" *ngFor="let item of emailsFormArray.controls; let i = index">
+                  <div [formGroup]="item">
+                      
+                        <div class="row"> 
+                            <div class="col-1" >
+                                <button type="button" class="mt-1" mat-mini-fab color="primary" (click)="adicionaEmail()"
+                                  [disabled]="!item.valid">
+                                  <mat-icon >add</mat-icon>
+                                </button>
+                              </div>                                                                    
+                           
+
+                            <div class="col-1" *ngIf="emailsFormArray.length!=1">
+                                <button type="button" class="mt-1" mat-mini-fab color="warn" >
+                                  <mat-icon >remove</mat-icon>
+                                </button>
+                              </div>
+                        </div>
+                            
+                  </div>
+              </ng-container>      
+           </div> -->
+          </div>
+
+</div>
+

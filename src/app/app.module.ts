@@ -26,6 +26,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { NgxMaskModule } from 'ngx-mask';
 import { DetalheClienteComponent } from './Cliente/detalhe-cliente/detalhe-cliente.component';
+import { NgxViacepModule } from '@brunoc/ngx-viacep';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +55,7 @@ import { DetalheClienteComponent } from './Cliente/detalhe-cliente/detalhe-clien
     MatTableModule,
     MatDialogModule,
     NgxMaskModule.forRoot(),
+    NgxViacepModule,
     
   ],
   providers: [ AuthService, AuthGuardService,

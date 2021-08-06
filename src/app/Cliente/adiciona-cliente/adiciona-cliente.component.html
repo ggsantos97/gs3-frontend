@@ -1,5 +1,5 @@
 <div>
-    <h1 mat-diaçpg-title> Adicionar Cliente <span style="margin-left: 69%;">
+    <h1 mat-dialog-title> Adicionar Cliente <span style="margin-left: 69%;">
         <button mat-mini-fab color="warn" mat-dialog-close><mat-icon>clear</mat-icon></button>
         </span>
     </h1>
@@ -7,11 +7,11 @@
 
 <div mat-dialog-content>
 
-    <form [formGroup]=formClienteAdd>
+    <form [formGroup]=formClienteAdd (submit)="salva()">
         <div class="row">
             <mat-form-field class="col-6">
                 <mat-label>Nome:</mat-label>
-                <input matInput type=text formControlName="nome">
+                <input matInput type=text formControlName="nome" >
             </mat-form-field>
 
             <mat-form-field class="col-6">
@@ -24,7 +24,7 @@
             <div class="row">
                 <mat-form-field class="col-4">
                     <mat-label>Cep:</mat-label>
-                    <input matInput  mask="00.000-000" formControlName="cep">
+                    <input matInput  mask="00.000-000" formControlName="cep" [(ngModel)]="cep" (blur)="buscaEnderecoPorCep()">
                 </mat-form-field>
     
                 <mat-form-field class="col-4">
@@ -59,13 +59,19 @@
          </div>
          
          <div>
-            <button  type="button" class="mb-2" style="right: -3%;" mat-raised-button color="primary" ><mat-icon>add</mat-icon></button>
+            <!-- <button  type="button" class="mb-2" style="right: -3%;" mat-raised-button color="primary" ><mat-icon>add</mat-icon></button> -->
             <div formArrayName="telefones">
               <ng-container [formGroupName]="i" *ngFor="let item of telefonesFormArray.controls; let i = index">
                   <div [formGroup]="item">
                       
-                        <div class="row">
-                            <mat-form-field class="form-group col-4" >
+                        <div class="row ">
+                            <div class="col-1" >
+                                <button type="button" class="mt-1" mat-mini-fab color="primary" (click)="adicionaTelefone()"
+                                  [disabled]="!item.valid">
+                                  <mat-icon >add</mat-icon>
+                                </button>
+                              </div>
+                            <mat-form-field class="form-group col-3" >
                                 <mat-label>Tipo Telefone</mat-label>
                                 <mat-select formControlName="tipotelefone">
                                    <mat-option value=1>Residencial</mat-option>
@@ -74,24 +80,22 @@
                                   </mat-select>
                               </mat-form-field>
                               
-                            <mat-form-field class="col-4">
+                            <mat-form-field class="col-3">
                                 <mat-label>DDD:</mat-label>
                                 <input matInput type=text formControlName="ddd">
                             </mat-form-field>
     
                             <mat-form-field class="col-4">
                                 <mat-label>Número:</mat-label>
-                                <input matInput type=text formControlName="numerotelefone">
+                                <input matInput type=text formControlName="numerotelefone" [mask]="getTelefoneMask(item?.value.numerotelefone)">
                             </mat-form-field>
+
+                            <div class="col-1" *ngIf="telefonesFormArray.length!=1">
+                                <button type="button" class="mt-1" mat-mini-fab color="warn" (click)="removeTelefones(i)">
+                                  <mat-icon >remove</mat-icon>
+                                </button>
+                              </div>
                         </div>
-                       
-                        <!-- <mat-icon class="btn-qtd" (click)="decrementaQuantidade(acompanhamento)">remove</mat-icon> -->
-                         <!-- <mat-form-field class="col-2" >
-                          <mat-label>Qtd:</mat-label>
-                          <input matInput type="text" formControlName="quantidade" readonly>
-                        </mat-form-field>  -->
-                        <!-- <mat-icon class="btn-qtd" (click)="incrementaQuantidade(acompanhamento)">add</mat-icon>
-                        <mat-icon class="btn-qtd" (click)="removeAcompanhamento(i)">delete</mat-icon> -->
                   </div>
               </ng-container>      
            </div>
@@ -99,34 +103,39 @@
        
 
           <div>
-            <button  type="button" class="mb-2" style="right: -3%;" mat-raised-button color="primary" ><mat-icon>add</mat-icon></button>
+            <!-- <button  type="button" class="mb-2" style="right: -3%;" mat-raised-button color="primary" ><mat-icon>add</mat-icon></button> -->
             <div formArrayName="emails">
               <ng-container [formGroupName]="i" *ngFor="let item of emailsFormArray.controls; let i = index">
                   <div [formGroup]="item">
                       
-                        <div class="row">                                                                     
-                            <mat-form-field class="col-6">
+                        <div class="row"> 
+                            <div class="col-1" >
+                                <button type="button" class="mt-1" mat-mini-fab color="primary" (click)="adicionaEmail()"
+                                  [disabled]="!item.valid">
+                                  <mat-icon >add</mat-icon>
+                                </button>
+                              </div>                                                                    
+                            <mat-form-field class="col-10">
                                 <mat-label>Email:</mat-label>
                                 <input matInput type=text formControlName="endereco">
                             </mat-form-field>
+
+                            <div class="col-1" *ngIf="emailsFormArray.length!=1">
+                                <button type="button" class="mt-1" mat-mini-fab color="warn" (click)="removeEmail(i)">
+                                  <mat-icon >remove</mat-icon>
+                                </button>
+                              </div>
                         </div>
-                       
-                        <!-- <mat-icon class="btn-qtd" (click)="decrementaQuantidade(acompanhamento)">remove</mat-icon> -->
-                         <!-- <mat-form-field class="col-2" >
-                          <mat-label>Qtd:</mat-label>
-                          <input matInput type="text" formControlName="quantidade" readonly>
-                        </mat-form-field>  -->
-                        <!-- <mat-icon class="btn-qtd" (click)="incrementaQuantidade(acompanhamento)">add</mat-icon>
-                        <mat-icon class="btn-qtd" (click)="removeAcompanhamento(i)">delete</mat-icon> -->
+                            
                   </div>
               </ng-container>      
            </div>
           </div>
 
-          <div class="row">
-            <div class="col-12 text-right">
-              <button mat-raised-button  status="primary" (click)="close()">Voltar</button>
-              <button mat-raised-button type="submit"  status="primary" 
+          <div class="container">
+            <div class="botoes">
+              <button id="btn-basic" mat-raised-button type="button"  color="basic" (click)="limpaForm()">Limpar</button>
+              <button mat-raised-button type="submit"  color="primary" 
                 [disabled]="formClienteAdd.invalid">Salvar</button>
             </div>
           </div>

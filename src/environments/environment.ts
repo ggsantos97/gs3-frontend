@@ -4,7 +4,8 @@
 
 export const environment = {
   API: 'http://localhost:4200/api',
-  API_CEP:'https://viacep.com.br/ws/',
+  API_CEP:'http://localhost:4200/ws/',
+  //API_CEP:'https://viacep.com.br/ws/',
   production: false
 };
 

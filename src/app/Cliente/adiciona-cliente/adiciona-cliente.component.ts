@@ -1,6 +1,12 @@
+import { CATCH_ERROR_VAR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, MaxLengthValidator, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CEPError, NgxViacepService } from '@brunoc/ngx-viacep';
+import { Cliente } from 'src/app/models/cliente';
+import { Endereco } from 'src/app/models/endereco';
+import { ViacepService } from 'src/app/services/viacep.service';
 import { ClienteService } from './../../services/cliente.service';
 
 @Component({
@@ -11,9 +17,14 @@ import { ClienteService } from './../../services/cliente.service';
 export class AdicionaClienteComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
+              private cepService:  NgxViacepService ,
+              private snacBar: MatSnackBar,
               private service: ClienteService,
               private dialogRef: MatDialogRef<AdicionaClienteComponent>) { }
 formClienteAdd: FormGroup;
+cep: string;
+cliente: Cliente;
+public  customPatterns  =  {  '0' : {  pattern : new  RegExp ( '\ [a-zA-Z \]' ) }  } ;
   ngOnInit(): void {
       this.criaForm();
   }
@@ -47,15 +58,17 @@ formClienteAdd: FormGroup;
   criaFormGroupEndereco(){
     return this.fb.group({
       id:[''],
-      cep:[''],
-      logradouro:[''],
-      bairro:[''],
-      cidade:[''],
-      uf:[''],
+      cep:['', Validators.required],
+      logradouro:['',Validators.required],
+      bairro:['',Validators.required],
+      cidade:['',Validators.required],
+      uf:['',Validators.required],
       complemento:['']
     })
   }
-
+  getTelefoneMask(value: string): string {
+    return (value && value.length > 8) ? '0 0000-0009' : '0000-00009';
+  }
   get telefonesFormArray(): FormArray {
     return this.formClienteAdd.get('telefones') as FormArray;
   }
@@ -64,8 +77,53 @@ formClienteAdd: FormGroup;
     return this.formClienteAdd.get('emails') as FormArray;
   }
 
+  adicionaTelefone() {
+    this.telefonesFormArray.push(this.criaFormGroupTelefone());
+    this.formClienteAdd.patchValue(this.cliente);
+  }
+
+  removeTelefones(posicao: number) {
+    this.telefonesFormArray.controls.splice(posicao, 1);
+    this.formClienteAdd.controls.telefones.value.splice(posicao, 1);
+    this.formClienteAdd.patchValue(this.cliente);
+  }
+
+  adicionaEmail() {
+    this.emailsFormArray.push(this.criaFormGroupEmail());
+    this.formClienteAdd.patchValue(this.cliente);
+  }
+
+  removeEmail(posicao: number) {
+    this.emailsFormArray.controls.splice(posicao, 1);
+    this.formClienteAdd.controls.emails.value.splice(posicao, 1);
+    this.formClienteAdd.patchValue(this.cliente);
+  }
+
   close(){
     this.dialogRef.close();
   }
+  limpaForm() {
+    this.formClienteAdd.reset();
+  }
+  buscaEnderecoPorCep( ) {
+    if(this.cep == '' && this.cep == null){
+      this.snacBar.open('Erro', 'Digite um cep válido');
+    }
+      this.cepService
+      .buscarPorCep(this.cep)  
+      .subscribe((endereco: Endereco) => {
+        // Endereço retornado :)
+        console.log(endereco);
+      });
+      
+  }
 
+  salva(){
+      this.cliente= this.formClienteAdd.value;
+      this.service.salva(this.cliente).subscribe( data => {
+          this.dialogRef.close(data);
+      }, error =>  {
+        this.snacBar.open('ERRO', 'Erro ao tentar salvar Cliente');
+      }) 
+  }
 }

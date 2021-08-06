@@ -11,8 +11,8 @@ export class ViacepService {
   constructor(private http: HttpClient) {
   }
 
-    buscaEnderecoPorCep(cep: string): Observable<Endereco> {
-      return this.http.get<any>(`${this.API}${cep}/json`);
+    buscaEnderecoPorCep(cep: string): Observable<any> {
+      return this.http.get<any>(`http://viacep.com.br/ws/${cep}/json/`);
     }
    
 }

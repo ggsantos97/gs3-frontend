@@ -14,4 +14,16 @@ export class ClienteService {
     listaClientes(): Observable<Cliente[]>{
       return this.http.get<any>(`${this.API}`);
     }
+
+    salva(cliente: Cliente): Observable<Cliente>{
+      return this.http.post<any>(`${this.API}`,  cliente);
+    }
+
+    atualiza(cliente: Cliente, id:number): Observable<Cliente>{
+      return this.http.put<any>(`${this.API}/${id}`,  cliente);
+    }
+
+    exclui(id: number): Observable<any> {
+      return this.http.delete<any>(`${this.API}/${id}`);
+    }
 }

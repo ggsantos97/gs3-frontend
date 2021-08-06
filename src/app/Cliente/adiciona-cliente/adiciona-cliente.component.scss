@@ -1,0 +1,16 @@
+.botoes{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.container {
+    height: 60px;
+    #btn-basic{
+      margin-right: 5px;  
+    }
+}
+
+.bt{
+    margin-top: 15px;
+  }
