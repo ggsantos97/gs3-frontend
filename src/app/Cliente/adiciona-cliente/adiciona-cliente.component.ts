@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, MaxLengthValidator, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, MaxLengthValidator, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ClienteService } from './../../services/cliente.service';
 
@@ -54,6 +54,10 @@ formClienteAdd: FormGroup;
       uf:[''],
       complemento:['']
     })
+  }
+
+  get telefonesFormArray(): FormArray {
+    return this.formClienteAdd.get('telefones') as FormArray;
   }
 
 }
